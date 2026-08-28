@@ -1,0 +1,202 @@
+---
+import Palette from "../components/mdx/Palette.astro";
+import ToolGrid from "../components/mdx/ToolGrid.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const categories = [
+  {
+    id: "system",
+    label: "System",
+    tools: [
+      {
+        name: "NixOS",
+        description: "Declarative, reproducible system configuration",
+        meta: "flakes",
+      },
+      {
+        name: "WSL2",
+        description: "Linux environment on the work machine",
+        meta: "linux 6.x",
+      },
+    ],
+  },
+  {
+    id: "terminal",
+    label: "Terminal",
+    tools: [
+      {
+        name: "Terminal emulator",
+        description: "GPU-accelerated, configured to Solarized Osaka Jade",
+        meta: "placeholder — pick your daily driver",
+      },
+      {
+        name: "JetBrains Mono",
+        description: "Monospace everywhere technical text appears",
+        meta: "variable font",
+      },
+    ],
+  },
+  {
+    id: "shell",
+    label: "Shell",
+    tools: [
+      {
+        name: "zsh",
+        description: "Daily shell with a minimal jade prompt",
+        meta: "~/.zshrc",
+      },
+    ],
+  },
+  {
+    id: "multiplexer",
+    label: "Multiplexer",
+    tools: [
+      {
+        name: "tmux",
+        description: "Sessions per project, themed status line",
+        meta: "~/.tmux.conf",
+      },
+    ],
+  },
+  {
+    id: "editors",
+    label: "Editors",
+    tools: [
+      {
+        name: "Neovim",
+        description: "Primary editor, Lua configuration",
+        meta: "lua",
+      },
+      {
+        name: "Zed",
+        description: "Secondary editor for pairing and quick edits",
+        meta: "osaka-jade theme",
+      },
+    ],
+  },
+  {
+    id: "cli",
+    label: "CLI",
+    tools: [
+      { name: "ripgrep", description: "Search that keeps up with thought", meta: "rg" },
+      { name: "fzf", description: "Fuzzy-find anything, anywhere", meta: "ctrl-r" },
+      { name: "eza", description: "ls with better manners", meta: "aliased to ls" },
+      { name: "zoxide", description: "cd that remembers where you go", meta: "z" },
+      { name: "bun", description: "Runtime, bundler, package manager", meta: "js/ts" },
+    ],
+  },
+  {
+    id: "cloud",
+    label: "Cloud / Infrastructure",
+    tools: [
+      {
+        name: "Cloudflare",
+        description: "Static hosting, DNS, and edge for this site",
+        meta: "workers · pages",
+      },
+      {
+        name: "AWS",
+        description: "Infrastructure for larger systems at work",
+        meta: "placeholder",
+      },
+    ],
+  },
+  {
+    id: "hardware",
+    label: "Hardware",
+    tools: [
+      {
+        name: "Workstation",
+        description: "Placeholder — machine specs to be filled in",
+        meta: "…",
+      },
+      {
+        name: "Keyboard",
+        description: "Placeholder — the inevitable mechanical keyboard",
+        meta: "…",
+      },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="Uses"
+  description="The development environment — system, terminal, editors, CLI tools, and the Solarized Osaka Jade theme that ties it together."
+  section="uses"
+>
+  <section class="reveal">
+    <header class="page-head">
+      <p class="eyebrow"><span class="tilde">~</span>/uses</p>
+      <h1>Uses</h1>
+      <p class="lede">
+        The environment this site grew out of. Every layer — terminal, editor, multiplexer,
+        even this page — runs the same theme:
+        <strong>Solarized Osaka Jade</strong>.
+      </p>
+    </header>
+  </section>
+
+  <section class="reveal" data-delay="2">
+    <h2 class="cat-label"><span class="hash">##</span> Palette</h2>
+    <p class="cat-note">The canonical tokens, shared by editor, terminal, and this site.</p>
+    <Palette />
+  </section>
+
+  {
+    categories.map((cat, i) => (
+      <section class="reveal" data-delay={String(Math.min(i + 3, 4))} id={cat.id}>
+        <h2 class="cat-label">
+          <span class="hash">##</span> {cat.label}
+        </h2>
+        <ToolGrid tools={cat.tools} />
+      </section>
+    ))
+  }
+</BaseLayout>
+
+<style>
+  .page-head {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-bottom: 1.9rem;
+    border-bottom: 1px solid var(--line);
+    border-image: var(--rule-gradient) 1;
+  }
+
+  h1 {
+    font-size: clamp(1.5rem, 3.5vw, 1.9rem);
+    margin: 0;
+  }
+
+  .lede {
+    color: var(--fg-secondary);
+    max-width: 36rem;
+  }
+
+  .lede strong {
+    color: var(--jade-bright);
+    font-weight: 500;
+  }
+
+  section + section {
+    margin-top: 2.6rem;
+  }
+
+  .cat-label {
+    font-size: 1.0625rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .hash {
+    font-family: var(--font-mono);
+    color: var(--jade-dark);
+    margin-right: 0.35rem;
+  }
+
+  .cat-note {
+    color: var(--fg-secondary);
+    font-size: 0.9063rem;
+  }
+</style>

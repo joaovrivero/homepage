@@ -1,0 +1,180 @@
+---
+title: "My Development Environment"
+description: "NixOS, Neovim, Zed, terminal tooling and Solarized Osaka Jade."
+published: 2026-08-27
+draft: false
+tags:
+  - nixos
+  - neovim
+  - tooling
+---
+
+import Callout from "../../components/mdx/Callout.astro";
+import CodeExample from "../../components/mdx/CodeExample.astro";
+import Palette from "../../components/mdx/Palette.astro";
+import TerminalPreview from "../../components/mdx/TerminalPreview.astro";
+import ToolGrid from "../../components/mdx/ToolGrid.astro";
+
+A development environment is the room you think in. This is a tour of mine — the
+system underneath, the terminal on top, and the single color scheme that holds all
+of it together.
+
+<Callout type="note" title="placeholder copy">
+  Several sections below use placeholder descriptions where real configuration
+  details haven't been written down yet. The structure is final; the facts will
+  grow in over time.
+</Callout>
+
+## `01` — Philosophy
+
+Three rules, applied everywhere:
+
+- **Reproducible over recoverable.** If a machine dies, its replacement should be a
+  `git clone` away, not an afternoon of archaeology.
+- **Small enough to understand.** Every tool in the stack should be explainable in
+  one sentence.
+- **One theme, everywhere.** Context switching is expensive; visual context
+  switching is expensive and silly.
+
+## `02` — NixOS
+
+The system layer is declarative. The entire machine — packages, services, dotfiles —
+is described in a flake and versioned like any other project.
+
+<CodeExample file="flake.nix" note="placeholder — simplified shape">
+
+```nix
+{
+  description = "workstation";
+
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+
+  outputs = { self, nixpkgs }: {
+    nixosConfigurations.jade = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      modules = [ ./hosts/jade ./modules/desktop.nix ];
+    };
+  };
+}
+```
+
+</CodeExample>
+
+Rebuilding the world is one command:
+
+<TerminalPreview title="~ zsh">
+
+```bash
+sudo nixos-rebuild switch --flake .#jade
+# building the system configuration...
+# activation finished successfully
+```
+
+</TerminalPreview>
+
+## `03` — Terminal
+
+A GPU-accelerated emulator, JetBrains Mono, and the jade palette. Nothing in the
+terminal is allowed to be a different green than the rest of the environment.
+
+## `04` — Shell
+
+zsh, kept deliberately small: a prompt showing path and git state, history search
+through fzf, and a handful of aliases that have earned their place.
+
+<TerminalPreview title="~/projects zsh">
+
+```bash
+❯ z homepage
+❯ rg "jade" --type css | head -3
+src/styles/theme.css:  --jade-dark: #3f7864;
+src/styles/theme.css:  --jade: #509475;
+src/styles/theme.css:  --jade-bright: #71cead;
+```
+
+</TerminalPreview>
+
+## `05` — Multiplexer
+
+tmux, one session per project. The status line uses `bg-dark` with jade accents, so
+switching sessions feels like turning pages rather than changing rooms.
+
+## `06` — Editor
+
+Neovim is the primary editor — Lua configuration, LSP, and treesitter, themed to
+match. Zed is the secondary editor for pairing and quick edits, running the same
+palette.
+
+<ToolGrid
+  tools={[
+    {
+      name: "Neovim",
+      description: "Primary editor. Lua config, LSP, treesitter.",
+      meta: "daily driver",
+    },
+    {
+      name: "Zed",
+      description: "Pairing and quick edits, same theme.",
+      meta: "secondary",
+    },
+  ]}
+/>
+
+## `07` — CLI Tools
+
+The supporting cast, each replacing a classic with something faster or kinder:
+
+<ToolGrid
+  tools={[
+    { name: "ripgrep", description: "grep, but it keeps up with thought.", meta: "rg" },
+    { name: "fzf", description: "Fuzzy-find files, history, everything.", meta: "ctrl-r" },
+    { name: "eza", description: "ls with better manners.", meta: "ls" },
+    { name: "zoxide", description: "cd that remembers where you go.", meta: "z" },
+    { name: "bat", description: "cat with syntax highlighting.", meta: "cat" },
+    { name: "bun", description: "Runtime, bundler, package manager.", meta: "js/ts" },
+  ]}
+/>
+
+## `08` — Solarized Osaka Jade
+
+The theme started as Solarized Osaka and drifted: the surfaces went darker and
+greener, and the accent settled on jade. It now ships as one set of tokens consumed
+by the editor, the terminal, tmux — and this site's CSS and Shiki theme.
+
+<Palette title="the canonical tokens" />
+
+The same tokens drive syntax highlighting. This block is rendered by Shiki with the
+site's custom theme:
+
+```typescript
+interface Theme {
+  name: string;
+  surfaces: Record<string, string>;
+}
+
+// One palette to rule them all.
+export function apply(theme: Theme, target = "everything"): number {
+  const tokens = Object.entries(theme.surfaces);
+  console.log(`applying ${theme.name} to ${target}`);
+  return tokens.length;
+}
+```
+
+## `09` — Reproducing the Setup
+
+Everything above lives in version control. On a fresh machine:
+
+<TerminalPreview title="~ zsh">
+
+```bash
+git clone https://github.com/joaovrivero/dotfiles ~/dotfiles
+cd ~/dotfiles
+sudo nixos-rebuild switch --flake .
+```
+
+</TerminalPreview>
+
+<Callout type="tip">
+  Repository links will be added as the configs are cleaned up for public use. The
+  theme itself will ship separately as <code>osaka-jade</code>.
+</Callout>

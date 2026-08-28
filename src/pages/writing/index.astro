@@ -1,0 +1,49 @@
+---
+import PostList from "../../components/blog/PostList.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getPublishedPosts } from "../../lib/posts";
+
+const posts = await getPublishedPosts();
+---
+
+<BaseLayout
+  title="Writing"
+  description="Notes on systems, tooling, environments, and whatever else takes root."
+  section="writing"
+>
+  <section class="reveal">
+    <header class="page-head">
+      <p class="eyebrow"><span class="tilde">~</span>/writing</p>
+      <h1>Writing</h1>
+      <p class="lede">
+        Notes on systems, tooling, environments, and whatever else takes root.
+      </p>
+    </header>
+  </section>
+
+  <section class="reveal" data-delay="2">
+    <PostList posts={posts} />
+  </section>
+</BaseLayout>
+
+<style>
+  .page-head {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-bottom: 1.9rem;
+    margin-bottom: 1.4rem;
+    border-bottom: 1px solid var(--line);
+    border-image: var(--rule-gradient) 1;
+  }
+
+  h1 {
+    font-size: clamp(1.5rem, 3.5vw, 1.9rem);
+    margin: 0;
+  }
+
+  .lede {
+    color: var(--fg-secondary);
+    max-width: 36rem;
+  }
+</style>

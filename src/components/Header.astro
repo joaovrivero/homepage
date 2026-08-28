@@ -1,0 +1,134 @@
+---
+import { NAV, type Section, SITE } from "../lib/site";
+
+interface Props {
+  section: Section;
+}
+
+const { section } = Astro.props;
+---
+
+<header class="site-header">
+  <div class="inner">
+    <a href="/" class="wordmark" aria-label="Home">
+      <span class="tilde">~</span>{SITE.handle}
+    </a>
+    <nav aria-label="Primary">
+      {
+        NAV.map((item) => (
+          <a
+            href={item.path}
+            class:list={["nav-link", { active: item.section === section }]}
+            aria-current={item.section === section ? "page" : undefined}
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: color-mix(in srgb, var(--bg-dark) 88%, transparent);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+    box-shadow:
+      0 1px 0 var(--edge),
+      inset 0 1px 0 var(--hl-top);
+  }
+
+  .inner {
+    max-width: 72rem;
+    margin-inline: auto;
+    padding: 0.85rem 1.25rem;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .wordmark {
+    font-family: var(--font-mono);
+    font-size: 0.9375rem;
+    color: var(--fg-bright);
+    letter-spacing: 0.01em;
+  }
+
+  .wordmark .tilde {
+    color: var(--jade);
+    margin-right: 0.15em;
+  }
+
+  .wordmark:hover .tilde {
+    color: var(--jade-bright);
+  }
+
+  nav {
+    display: flex;
+    gap: 0.55rem;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .nav-link {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    color: var(--fg-secondary);
+    padding: 0.22rem 0.5rem;
+    border-radius: 5px;
+    border: 1px solid transparent;
+    transition:
+      color 100ms ease,
+      background-color 100ms ease,
+      border-color 100ms ease,
+      transform 100ms ease,
+      box-shadow 100ms ease;
+  }
+
+  .nav-link:hover {
+    color: var(--fg-bright);
+    background: var(--bg-raised);
+    border-color: var(--line);
+    box-shadow: var(--shadow-raise), inset 0 1px 0 var(--hl-top);
+    transform: translateY(-1px);
+  }
+
+  .nav-link:active {
+    transform: translateY(1px);
+    box-shadow: none;
+  }
+
+  .nav-link.active {
+    color: var(--jade-bright);
+    box-shadow: inset 0 -2px 0 color-mix(in srgb, var(--jade) 65%, transparent);
+    border-radius: 5px 5px 2px 2px;
+  }
+
+  .nav-link.active:hover {
+    transform: none;
+    background: transparent;
+    border-color: transparent;
+    box-shadow: inset 0 -2px 0 var(--jade);
+  }
+
+  @media (max-width: 639px) {
+    .inner {
+      padding: 0.75rem 1rem;
+    }
+
+    nav {
+      gap: 0.3rem;
+    }
+
+    .nav-link {
+      font-size: 0.75rem;
+      padding-inline: 0.35rem;
+    }
+  }
+</style>

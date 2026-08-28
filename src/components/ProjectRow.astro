@@ -1,0 +1,110 @@
+---
+import type { Project } from "../lib/projects";
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+---
+
+<li class="project">
+  <div class="head">
+    <span class="name">{project.name}</span>
+    {project.status && <span class:list={["status", project.status]}>{project.status}</span>}
+    <span class="line" aria-hidden="true"></span>
+    <span class="links">
+      {project.repo && <a class="bracket-link" href={project.repo} rel="noopener">repo</a>}
+      {project.url && <a class="bracket-link" href={project.url} rel="noopener">live</a>}
+    </span>
+  </div>
+  <p class="description">{project.description}</p>
+  <p class="tags">{project.tags.join(" · ")}</p>
+</li>
+
+<style>
+  .project {
+    padding-block: 1.1rem;
+    transition: transform 120ms ease;
+  }
+
+  .project + .project {
+    border-top: 1px solid var(--line);
+    transition: border-color 120ms ease;
+  }
+
+  .project:hover {
+    transform: translateY(-1px);
+  }
+
+  .project:hover + .project {
+    border-top-color: var(--line-strong);
+  }
+
+  .project:hover .name {
+    color: var(--jade-bright);
+  }
+
+  .project:hover .line {
+    border-bottom-color: color-mix(in srgb, var(--jade) 40%, var(--line));
+  }
+
+  .head {
+    display: flex;
+    align-items: baseline;
+    gap: 0.7rem;
+  }
+
+  .name {
+    font-family: var(--font-mono);
+    font-size: 0.9375rem;
+    font-weight: 560;
+    color: var(--fg-bright);
+    transition: color 120ms ease;
+  }
+
+  .status {
+    font-family: var(--font-mono);
+    font-size: 0.6563rem;
+    letter-spacing: 0.06em;
+    padding: 0.05rem 0.4rem;
+    border-radius: 3px;
+    border: 1px solid var(--line-strong);
+    color: var(--fg-secondary);
+    box-shadow: 0 1px 0 var(--edge);
+  }
+
+  /* The one warm accent in the system: live things glow yellow. */
+  .status.active {
+    color: var(--yellow);
+    border-color: color-mix(in srgb, var(--yellow) 35%, transparent);
+  }
+
+  .status.archived {
+    color: var(--fg-muted);
+  }
+
+  .line {
+    flex: 1;
+    border-bottom: 1px dashed var(--line);
+    transform: translateY(-0.25em);
+  }
+
+  .links {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .description {
+    margin-top: 0.3rem;
+    color: var(--fg);
+    font-size: 0.9375rem;
+  }
+
+  .tags {
+    margin-top: 0.25rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--fg-muted);
+  }
+</style>

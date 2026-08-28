@@ -1,0 +1,417 @@
+@import "./theme.css";
+@import "tailwindcss";
+@import "./transitions.css";
+
+@theme inline {
+  --color-*: initial;
+  --color-bg-deep: var(--bg-deep);
+  --color-bg-dark: var(--bg-dark);
+  --color-bg: var(--bg);
+  --color-bg-raised: var(--bg-raised);
+  --color-bg-elevated: var(--bg-elevated);
+  --color-selection: var(--selection);
+  --color-fg-muted: var(--fg-muted);
+  --color-fg-secondary: var(--fg-secondary);
+  --color-fg: var(--fg);
+  --color-fg-bright: var(--fg-bright);
+  --color-jade-dark: var(--jade-dark);
+  --color-jade: var(--jade);
+  --color-jade-bright: var(--jade-bright);
+  --color-red: var(--red);
+  --color-red-bright: var(--red-bright);
+  --color-yellow: var(--yellow);
+  --color-yellow-bright: var(--yellow-bright);
+  --color-blue: var(--blue);
+  --color-blue-bright: var(--blue-bright);
+  --color-purple: var(--purple);
+  --color-purple-bright: var(--purple-bright);
+  --color-cyan: var(--cyan);
+  --color-cyan-bright: var(--cyan-bright);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+}
+
+/* ------------------------------------------------------------------ */
+/* Base                                                               */
+/* ------------------------------------------------------------------ */
+
+html {
+  background-color: var(--bg-deep);
+  color-scheme: dark;
+  scrollbar-gutter: stable;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--fg);
+  background-color: var(--bg-deep);
+  font-size: 1rem;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Ambient depth: a barely-there jade glow high on the page and a faint
+   vertical falloff into --bg-deep at the bottom. Static, no animation. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(
+    52rem 34rem at 78% -6rem,
+    color-mix(in srgb, var(--jade-dark) 7%, transparent),
+    transparent 68%
+  );
+}
+
+/* Extremely faint scanline texture over everything. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.028;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 3px,
+    var(--fg-bright) 3px,
+    var(--fg-bright) 4px
+  );
+}
+
+::selection {
+  background-color: var(--selection);
+  color: var(--fg-bright);
+}
+
+:focus-visible {
+  outline: 2px solid var(--jade);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  color: var(--fg-bright);
+  font-weight: 560;
+  letter-spacing: -0.015em;
+  line-height: 1.25;
+  text-wrap: balance;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+code,
+kbd,
+pre,
+samp {
+  font-family: var(--font-mono);
+  font-feature-settings: "calt" 0;
+}
+
+/* ------------------------------------------------------------------ */
+/* Recurring site vocabulary                                          */
+/* ------------------------------------------------------------------ */
+
+/* Monospace path-style section eyebrow: ~/writing */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  letter-spacing: 0.02em;
+  color: var(--fg-secondary);
+}
+
+.eyebrow .tilde {
+  color: var(--jade);
+}
+
+.hairline {
+  border: 0;
+  border-top: 1px solid var(--line);
+  border-image: var(--rule-gradient) 1;
+}
+
+/* Inline text link with jade underline */
+.link {
+  color: var(--fg);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--jade) 45%, transparent);
+  text-underline-offset: 0.22em;
+  transition:
+    color 140ms ease,
+    text-decoration-color 140ms ease;
+}
+
+.link:hover {
+  color: var(--jade-bright);
+  text-decoration-color: var(--jade-bright);
+}
+
+/* ------------------------------------------------------------------ */
+/* Tactile layer                                                      */
+/* ------------------------------------------------------------------ */
+
+/* Raised physical control. Reads as a key you can press. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--fg);
+  padding: 0.42rem 0.9rem;
+  background: var(--bg-raised);
+  border: 1px solid color-mix(in srgb, var(--jade-dark) 55%, var(--line-strong));
+  border-bottom-width: 3px;
+  border-bottom-color: color-mix(in srgb, var(--jade-dark) 30%, var(--edge));
+  border-radius: 6px;
+  box-shadow: var(--shadow-raise), inset 0 1px 0 var(--hl-top);
+  transition:
+    background-color 100ms ease,
+    border-color 100ms ease,
+    color 100ms ease,
+    transform 100ms ease,
+    box-shadow 100ms ease;
+  cursor: pointer;
+  user-select: none;
+}
+
+.btn:hover,
+.btn:focus-visible {
+  background: var(--bg-elevated);
+  border-color: var(--jade);
+  border-bottom-color: color-mix(in srgb, var(--jade-dark) 55%, var(--edge));
+  color: var(--fg-bright);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-raise-lg), inset 0 1px 0 var(--hl-top);
+}
+
+.btn:active {
+  transform: translateY(2px);
+  border-bottom-color: transparent;
+  box-shadow: inset 0 1px 2px color-mix(in srgb, black 35%, transparent);
+  background: var(--bg-raised);
+}
+
+.btn .prompt {
+  color: var(--jade);
+}
+
+/* Recessed surface: content set into the page rather than on top of it. */
+.inset-panel {
+  background: var(--bg-dark);
+  border: 1px solid var(--line);
+  border-top-color: color-mix(in srgb, var(--bg-deep) 60%, var(--line));
+  border-radius: 8px;
+  box-shadow: var(--shadow-inset), 0 1px 0 var(--hl-top);
+}
+
+/* Bracketed mono action: [ github ] */
+.bracket-link {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--fg-secondary);
+  transition: color 140ms ease;
+  white-space: nowrap;
+}
+
+.bracket-link::before {
+  content: "[ ";
+  color: var(--fg-muted);
+}
+
+.bracket-link::after {
+  content: " ]";
+  color: var(--fg-muted);
+}
+
+.bracket-link:hover {
+  color: var(--jade-bright);
+}
+
+.bracket-link:hover::before,
+.bracket-link:hover::after {
+  color: var(--jade-dark);
+}
+
+/* ------------------------------------------------------------------ */
+/* Article prose                                                      */
+/* ------------------------------------------------------------------ */
+
+.prose {
+  max-width: 42rem;
+  font-size: 1.0313rem;
+}
+
+.prose > * + * {
+  margin-top: 1.1em;
+}
+
+.prose h2 {
+  font-size: 1.375rem;
+  margin-top: 2.6em;
+  margin-bottom: 0.7em;
+}
+
+/* Numbered-section headings ("01 — Philosophy") keep the number quiet */
+.prose h2 code,
+.prose h3 code {
+  color: var(--jade);
+}
+
+.prose h3 {
+  font-size: 1.125rem;
+  margin-top: 2em;
+  margin-bottom: 0.6em;
+}
+
+.prose p {
+  color: var(--fg);
+}
+
+.prose a {
+  color: var(--fg);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--jade) 45%, transparent);
+  text-underline-offset: 0.22em;
+}
+
+.prose a:hover {
+  color: var(--jade-bright);
+  text-decoration-color: var(--jade-bright);
+}
+
+.prose strong {
+  color: var(--fg-bright);
+  font-weight: 600;
+}
+
+.prose em {
+  color: var(--fg);
+}
+
+.prose ul,
+.prose ol {
+  padding-left: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35em;
+}
+
+.prose ul {
+  list-style: none;
+}
+
+.prose ul > li {
+  position: relative;
+}
+
+.prose ul > li::before {
+  content: "·";
+  position: absolute;
+  left: -1.1rem;
+  color: var(--jade);
+  font-family: var(--font-mono);
+}
+
+.prose ol {
+  list-style: decimal;
+}
+
+.prose ol::marker {
+  color: var(--fg-muted);
+}
+
+.prose blockquote {
+  border-left: 2px solid var(--jade-dark);
+  padding-left: 1.1rem;
+  color: var(--fg-secondary);
+  font-style: italic;
+}
+
+.prose hr {
+  border: 0;
+  border-top: 1px solid var(--line);
+  border-image: var(--rule-gradient) 1;
+  margin: 2.5em 0;
+}
+
+.prose code:not(pre code) {
+  font-size: 0.875em;
+  color: var(--cyan-bright);
+  background: var(--bg-raised);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 0.1em 0.35em;
+  white-space: nowrap;
+}
+
+.prose img {
+  border-radius: 6px;
+  border: 1px solid var(--line);
+}
+
+.prose table {
+  width: 100%;
+  font-size: 0.9375rem;
+  border-collapse: collapse;
+}
+
+.prose th {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  text-align: left;
+  color: var(--fg-secondary);
+  border-bottom: 1px solid var(--line-strong);
+  padding: 0.4rem 0.75rem 0.4rem 0;
+}
+
+.prose td {
+  border-bottom: 1px solid var(--line);
+  padding: 0.45rem 0.75rem 0.45rem 0;
+  vertical-align: top;
+}
+
+/* Code blocks (Shiki): recessed, set into the page. */
+.prose pre,
+pre.astro-code {
+  background-color: var(--bg-dark) !important;
+  border: 1px solid var(--line);
+  border-top-color: color-mix(in srgb, var(--bg-deep) 60%, var(--line));
+  border-radius: 8px;
+  box-shadow: var(--shadow-inset), 0 1px 0 var(--hl-top);
+  padding: 1rem 1.25rem;
+  font-size: 0.8438rem;
+  line-height: 1.65;
+  overflow-x: auto;
+}
+
+.prose pre {
+  margin-top: 1.4em;
+  margin-bottom: 1.4em;
+}
+
+/* ASCII art must never wrap or scale blurry */
+pre.ascii {
+  font-family: var(--font-mono);
+  line-height: 1.18;
+  white-space: pre;
+  overflow: hidden;
+  user-select: none;
+}

@@ -1,0 +1,100 @@
+---
+export interface Tool {
+  name: string;
+  description: string;
+  href?: string;
+  meta?: string;
+}
+
+interface Props {
+  tools: Tool[];
+}
+
+const { tools } = Astro.props;
+---
+
+<ul class="tool-grid">
+  {
+    tools.map((tool) => (
+      <li class="tool">
+        {tool.href ? (
+          <a href={tool.href} rel="noopener">
+            <span class="name">{tool.name}</span>
+            <span class="description">{tool.description}</span>
+            {tool.meta && <span class="meta">{tool.meta}</span>}
+          </a>
+        ) : (
+          <div>
+            <span class="name">{tool.name}</span>
+            <span class="description">{tool.description}</span>
+            {tool.meta && <span class="meta">{tool.meta}</span>}
+          </div>
+        )}
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  .tool-grid {
+    list-style: none;
+    padding: 0;
+    margin-block: 1.8em;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
+    gap: 0.6rem;
+  }
+
+  .tool > a,
+  .tool > div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    height: 100%;
+    padding: 0.8rem 0.95rem;
+    background: var(--bg-raised);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    transition:
+      background-color 100ms ease,
+      border-color 100ms ease,
+      transform 100ms ease,
+      box-shadow 100ms ease;
+  }
+
+  .tool > a:hover {
+    background: var(--bg-elevated);
+    border-color: color-mix(in srgb, var(--jade) 40%, var(--line-strong));
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-raise), inset 0 1px 0 var(--hl-top);
+  }
+
+  .tool > a:active {
+    transform: translateY(1px);
+    box-shadow: none;
+  }
+
+  .name {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    color: var(--fg-bright);
+  }
+
+  .tool > a:hover .name {
+    color: var(--jade-bright);
+  }
+
+  .description {
+    font-size: 0.8438rem;
+    color: var(--fg-secondary);
+    line-height: 1.5;
+  }
+
+  .meta {
+    margin-top: auto;
+    padding-top: 0.35rem;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--fg-muted);
+  }
+</style>

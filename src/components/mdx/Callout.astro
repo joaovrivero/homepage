@@ -1,0 +1,86 @@
+---
+interface Props {
+  type?: "note" | "warning" | "error" | "tip";
+  title?: string;
+}
+
+const { type = "note", title } = Astro.props;
+
+const labels: Record<string, string> = {
+  note: "NOTE",
+  warning: "WARN",
+  error: "ERR!",
+  tip: "TIP ",
+};
+---
+
+<aside class:list={["callout", type]}>
+  <p class="label">{labels[type]}{title && <span class="title"> · {title}</span>}</p>
+  <div class="content"><slot /></div>
+</aside>
+
+<style>
+  .callout {
+    margin-block: 1.6em;
+    padding: 0.9rem 1.1rem;
+    background: var(--bg-raised);
+    border: 1px solid var(--line);
+    border-left-width: 2px;
+    border-radius: 6px;
+    font-size: 0.9375rem;
+    box-shadow: var(--shadow-raise), inset 0 1px 0 var(--hl-top);
+  }
+
+  .label {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.08em;
+    margin: 0 0 0.4rem;
+  }
+
+  .title {
+    color: var(--fg-secondary);
+    letter-spacing: 0.02em;
+  }
+
+  .content :global(p) {
+    margin: 0;
+    color: var(--fg);
+  }
+
+  .content :global(p + p) {
+    margin-top: 0.5em;
+  }
+
+  .note {
+    border-left-color: var(--blue);
+  }
+
+  .note .label {
+    color: var(--blue-bright);
+  }
+
+  .tip {
+    border-left-color: var(--jade);
+  }
+
+  .tip .label {
+    color: var(--jade-bright);
+  }
+
+  .warning {
+    border-left-color: var(--yellow);
+  }
+
+  .warning .label {
+    color: var(--yellow-bright);
+  }
+
+  .error {
+    border-left-color: var(--red);
+  }
+
+  .error .label {
+    color: var(--red-bright);
+  }
+</style>

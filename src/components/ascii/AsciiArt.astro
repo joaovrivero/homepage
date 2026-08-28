@@ -1,0 +1,24 @@
+---
+/**
+ * Static ASCII renderer for use inside pages and MDX (no hydration).
+ */
+interface Props {
+  art: string;
+  label?: string;
+  class?: string;
+}
+
+const { art, label, class: className } = Astro.props;
+---
+
+<pre
+  class:list={["ascii", className]}
+  aria-hidden={label ? undefined : "true"}
+  aria-label={label}>{art}</pre>
+
+<style>
+  pre {
+    color: var(--jade-dark);
+    font-size: 0.8125rem;
+  }
+</style>

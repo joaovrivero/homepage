@@ -1,0 +1,60 @@
+---
+import ColorSwatch from "./ColorSwatch.astro";
+
+interface Swatch {
+  name: string;
+  value: string;
+  role?: string;
+}
+
+interface Props {
+  title?: string;
+  colors?: Swatch[];
+}
+
+/** Default: the canonical Solarized Osaka Jade palette. */
+const defaultColors: Swatch[] = [
+  { name: "bg-deep", value: "#0A0F0F", role: "deepest surfaces" },
+  { name: "bg-dark", value: "#0D1413", role: "nav / footer / code" },
+  { name: "bg", value: "#101817", role: "page background" },
+  { name: "bg-raised", value: "#16201F", role: "cards" },
+  { name: "bg-elevated", value: "#1C2927", role: "hover states" },
+  { name: "fg-muted", value: "#536D67", role: "comments" },
+  { name: "fg-secondary", value: "#789188", role: "metadata" },
+  { name: "fg", value: "#CBD8D2", role: "body text" },
+  { name: "fg-bright", value: "#E2E9E5", role: "headings" },
+  { name: "jade-dark", value: "#3F7864", role: "quiet accent" },
+  { name: "jade", value: "#509475", role: "identity accent" },
+  { name: "jade-bright", value: "#71CEAD", role: "highlights / strings" },
+  { name: "red", value: "#E55C7A", role: "errors" },
+  { name: "yellow", value: "#E7C664", role: "warnings / numbers" },
+  { name: "blue", value: "#54B9C5", role: "functions" },
+  { name: "purple", value: "#B77EE0", role: "keywords" },
+  { name: "cyan", value: "#53C2B6", role: "operators" },
+];
+
+const { title, colors = defaultColors } = Astro.props;
+---
+
+<figure class="palette">
+  {title && <figcaption class="eyebrow">{title}</figcaption>}
+  <div class="grid">
+    {colors.map((c) => <ColorSwatch name={c.name} value={c.value} role={c.role} />)}
+  </div>
+</figure>
+
+<style>
+  .palette {
+    margin-block: 1.8em;
+  }
+
+  figcaption {
+    margin-bottom: 0.8rem;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(11.5rem, 1fr));
+    gap: 0.5rem;
+  }
+</style>

@@ -1,0 +1,105 @@
+---
+import { formatDate, type Post } from "../../lib/posts";
+
+interface Props {
+  post: Post;
+}
+
+const { post } = Astro.props;
+---
+
+<li class="post-card">
+  <a href={`/writing/${post.id}`}>
+    <time datetime={post.data.published.toISOString()}>{formatDate(post.data.published)}</time>
+    <span class="body">
+      <span class="title"
+        >{post.data.title}<span class="arrow" aria-hidden="true"> ↗</span></span
+      >
+      <span class="description">{post.data.description}</span>
+    </span>
+  </a>
+</li>
+
+<style>
+  .post-card a {
+    display: grid;
+    grid-template-columns: 6.5rem minmax(0, 1fr);
+    gap: 1.25rem;
+    padding: 0.85rem 0.75rem;
+    margin-inline: -0.75rem;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    transition:
+      background-color 100ms ease,
+      border-color 100ms ease,
+      transform 100ms ease,
+      box-shadow 100ms ease;
+  }
+
+  .post-card a:hover,
+  .post-card a:focus-visible {
+    background-color: var(--bg-raised);
+    border-color: var(--line);
+    transform: translateY(-1px);
+    box-shadow:
+      var(--shadow-raise),
+      inset 0 1px 0 var(--hl-top),
+      inset 0 -1px 0 color-mix(in srgb, var(--jade) 35%, transparent);
+  }
+
+  .post-card a:active {
+    transform: translateY(1px);
+    box-shadow: none;
+  }
+
+  .arrow {
+    color: var(--jade-bright);
+    opacity: 0;
+    transition: opacity 120ms ease;
+  }
+
+  .post-card a:hover .arrow,
+  .post-card a:focus-visible .arrow {
+    opacity: 1;
+  }
+
+  time {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--fg-muted);
+    padding-top: 0.3rem;
+  }
+
+  .body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .title {
+    color: var(--fg-bright);
+    font-weight: 560;
+  }
+
+  .post-card a:hover .title,
+  .post-card a:focus-visible .title {
+    color: var(--jade-bright);
+  }
+
+  .description {
+    color: var(--fg-secondary);
+    font-size: 0.9063rem;
+    line-height: 1.55;
+  }
+
+  @media (max-width: 639px) {
+    .post-card a {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0.2rem;
+    }
+
+    time {
+      padding-top: 0;
+    }
+  }
+</style>

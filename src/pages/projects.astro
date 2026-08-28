@@ -1,0 +1,56 @@
+---
+import ProjectRow from "../components/ProjectRow.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { PROJECTS } from "../lib/projects";
+---
+
+<BaseLayout
+  title="Projects"
+  description="Selected projects — systems, tooling, and applications."
+  section="projects"
+>
+  <section class="reveal">
+    <header class="page-head">
+      <p class="eyebrow"><span class="tilde">~</span>/projects</p>
+      <h1>Projects</h1>
+      <p class="lede">
+        Things built, grown, or pruned. Some are public, some live behind company walls
+        and appear here only in silhouette.
+      </p>
+    </header>
+  </section>
+
+  <section class="reveal" data-delay="2">
+    <ul class="project-list">
+      {PROJECTS.map((project) => <ProjectRow project={project} />)}
+    </ul>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-head {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-bottom: 1.9rem;
+    margin-bottom: 0.6rem;
+    border-bottom: 1px solid var(--line);
+    border-image: var(--rule-gradient) 1;
+  }
+
+  h1 {
+    font-size: clamp(1.5rem, 3.5vw, 1.9rem);
+    margin: 0;
+  }
+
+  .lede {
+    color: var(--fg-secondary);
+    max-width: 36rem;
+  }
+
+  .project-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+</style>

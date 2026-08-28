@@ -1,0 +1,62 @@
+---
+/**
+ * Frames a fenced code block with a mono filename/label header.
+ */
+interface Props {
+  file?: string;
+  note?: string;
+}
+
+const { file, note } = Astro.props;
+---
+
+<figure class="code-example">
+  {
+    (file || note) && (
+      <figcaption>
+        {file && <code class="file">{file}</code>}
+        {note && <span class="note">{note}</span>}
+      </figcaption>
+    )
+  }
+  <slot />
+</figure>
+
+<style>
+  .code-example {
+    margin-block: 1.8em;
+  }
+
+  figcaption {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.45rem 0.9rem;
+    background: var(--bg-raised);
+    border: 1px solid var(--line);
+    border-bottom: 1px solid var(--edge);
+    border-radius: 8px 8px 0 0;
+    box-shadow: inset 0 1px 0 var(--hl-top);
+  }
+
+  .file {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--cyan-bright);
+  }
+
+  .note {
+    font-size: 0.75rem;
+    color: var(--fg-muted);
+  }
+
+  .code-example :global(pre) {
+    margin: 0 !important;
+  }
+
+  figcaption + :global(pre) {
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+  }
+</style>

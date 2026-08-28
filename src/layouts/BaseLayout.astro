@@ -1,0 +1,137 @@
+---
+import "@fontsource-variable/geist";
+import "@fontsource-variable/jetbrains-mono";
+import "../styles/global.css";
+import { ClientRouter } from "astro:transitions";
+import AsciiScene from "../components/ascii/AsciiScene.svelte";
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+import { pageTitle, type Section, SITE } from "../lib/site";
+
+interface Props {
+  title?: string;
+  description?: string;
+  section: Section;
+  ogType?: "website" | "article";
+  /** Optional JSON-LD object rendered into the head. */
+  schema?: Record<string, unknown>;
+}
+
+const { title, description = SITE.description, section, ogType = "website", schema } = Astro.props;
+
+const fullTitle = pageTitle(title);
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang={SITE.locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate" type="application/rss+xml" title={SITE.name} href="/rss.xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <meta property="og:type" content={ogType} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content={SITE.name} />
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+
+    {schema && <script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />}
+
+    <ClientRouter />
+  </head>
+  <body data-section={section}>
+    <Header section={section} />
+
+    <div class="site-shell">
+      <main id="main" transition:name="page-content">
+        <slot />
+      </main>
+
+      <aside class="ascii-rail">
+        <div class="ascii-sticky">
+          <AsciiScene client:load transition:persist="ascii-scene" />
+        </div>
+      </aside>
+    </div>
+
+    <Footer />
+  </body>
+</html>
+
+<style is:global>
+  /* The journal: one quiet page surface resting in a darker environment. */
+  .site-shell {
+    width: min(72rem, calc(100% - 2rem));
+    margin: 2.25rem auto 3rem;
+    padding: 3.25rem 2.75rem 5rem;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: 3.5rem;
+    align-items: start;
+    flex: 1;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    box-shadow: var(--shadow-raise-lg), inset 0 1px 0 var(--hl-top);
+  }
+
+  .site-shell main {
+    min-width: 0;
+  }
+
+  .ascii-rail {
+    padding-top: 0.5rem;
+  }
+
+  .ascii-sticky {
+    position: sticky;
+    top: 5.5rem;
+  }
+
+  @media (max-width: 1023px) {
+    .site-shell {
+      column-gap: 2rem;
+      padding-inline: 1.75rem;
+    }
+  }
+
+  @media (max-width: 639px) {
+    .site-shell {
+      grid-template-columns: minmax(0, 1fr);
+      width: calc(100% - 1.5rem);
+      margin-block: 1.25rem 2rem;
+      padding: 2rem 1.1rem 3.25rem;
+      row-gap: 2.25rem;
+    }
+
+    .ascii-rail {
+      order: -1;
+      display: flex;
+      justify-content: center;
+      padding-top: 0;
+    }
+
+    .ascii-sticky {
+      position: static;
+    }
+
+    /* On small screens the tree only accompanies the home page;
+       inner pages give the full width to content. The element stays
+       in the DOM so the island persists across navigations. */
+    body:not([data-section="home"]) .ascii-rail {
+      display: none;
+    }
+  }
+</style>

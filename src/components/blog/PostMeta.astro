@@ -1,0 +1,52 @@
+---
+import { formatDate } from "../../lib/posts";
+
+interface Props {
+  published: Date;
+  updated?: Date | undefined;
+  tags?: string[];
+  draft?: boolean;
+}
+
+const { published, updated, tags = [], draft = false } = Astro.props;
+---
+
+<p class="post-meta">
+  <time datetime={published.toISOString()}>{formatDate(published)}</time>
+  {
+    updated && (
+      <span class="updated">
+        · updated <time datetime={updated.toISOString()}>{formatDate(updated)}</time>
+      </span>
+    )
+  }
+  {draft && <span class="draft">draft</span>}
+  {tags.map((tag) => <span class="tag">#{tag}</span>)}
+</p>
+
+<style>
+  .post-meta {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--fg-muted);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+    align-items: baseline;
+  }
+
+  .updated {
+    color: var(--fg-muted);
+  }
+
+  .draft {
+    color: var(--yellow);
+    border: 1px solid color-mix(in srgb, var(--yellow) 40%, transparent);
+    border-radius: 3px;
+    padding: 0 0.35em;
+  }
+
+  .tag {
+    color: var(--fg-secondary);
+  }
+</style>

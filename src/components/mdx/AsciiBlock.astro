@@ -1,0 +1,38 @@
+---
+/**
+ * Decorative ASCII block for MDX posts. Pass art as the default slot
+ * (a template literal via the `art` prop keeps whitespace intact).
+ */
+interface Props {
+  art: string;
+  label?: string;
+  align?: "left" | "center";
+}
+
+const { art, label, align = "center" } = Astro.props;
+---
+
+<figure class:list={["ascii-block", align]}>
+  <pre
+    class="ascii"
+    aria-hidden={label ? undefined : "true"}
+    aria-label={label}>{art}</pre>
+</figure>
+
+<style>
+  .ascii-block {
+    margin-block: 1.8em;
+    display: flex;
+  }
+
+  .ascii-block.center {
+    justify-content: center;
+  }
+
+  pre {
+    color: var(--jade-dark);
+    font-size: 0.8125rem;
+    overflow-x: auto;
+    max-width: 100%;
+  }
+</style>

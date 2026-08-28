@@ -1,0 +1,57 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { SITE } from "../lib/site";
+---
+
+<BaseLayout
+  title="About"
+  description="About João Rivero — software engineer working on systems, infrastructure, and tools."
+  section="about"
+>
+  <section class="reveal">
+    <header class="page-head">
+      <p class="eyebrow"><span class="tilde">~</span>/about</p>
+      <h1>About</h1>
+    </header>
+  </section>
+
+  <section class="prose reveal" data-delay="2">
+    <p>
+      I'm {SITE.name}, a software engineer. I build systems, infrastructure, and tools —
+      professionally and for the shelf of things I simply want to exist.
+    </p>
+    <p>
+      Most of my energy goes into environments: reproducible machines, terminals that feel
+      like home, editors tuned until they disappear. The green running through this site,
+      <a href="/uses">Solarized Osaka Jade</a>, is the same theme running in my editor and
+      terminal right now.
+    </p>
+    <p>
+      Current interests: declarative systems (NixOS), developer tooling, static-first web
+      architecture, and keeping software small enough to understand.
+    </p>
+    <p>
+      The best places to find me are
+      <a href={SITE.author.github} rel="me noopener">GitHub</a> and
+      <a href={SITE.author.linkedin} rel="me noopener">LinkedIn</a>. If you want to see how
+      this site works, the <a href={SITE.source} rel="noopener">source is public</a>.
+    </p>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-head {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-bottom: 1.9rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--line);
+    border-image: var(--rule-gradient) 1;
+  }
+
+  h1 {
+    font-size: clamp(1.5rem, 3.5vw, 1.9rem);
+    margin: 0;
+  }
+</style>

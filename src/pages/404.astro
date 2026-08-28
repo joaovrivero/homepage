@@ -1,0 +1,36 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Not found" description="Page not found." section="home">
+  <section class="reveal">
+    <p class="eyebrow"><span class="tilde">~</span>/404</p>
+    <h1><code>ENOENT</code> — no such file or directory</h1>
+    <p class="hint">
+      The path you followed leads nowhere. The tree, however, is still here.
+    </p>
+    <p><a class="btn" href="/"><span class="prompt">$</span>cd ~</a></p>
+  </section>
+</BaseLayout>
+
+<style>
+  section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    padding-block: 2rem;
+  }
+
+  h1 {
+    font-size: clamp(1.2rem, 3vw, 1.6rem);
+  }
+
+  h1 code {
+    color: var(--red-bright);
+  }
+
+  .hint {
+    color: var(--fg-secondary);
+    max-width: 30rem;
+  }
+</style>

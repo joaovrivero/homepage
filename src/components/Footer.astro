@@ -1,0 +1,62 @@
+---
+import { SITE } from "../lib/site";
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="inner">
+    <p class="status">
+      <span class="prompt">$</span> whoami
+      <span class="sep">→</span> {SITE.name} · © {year}
+    </p>
+    <nav aria-label="Footer">
+      <a class="bracket-link" href={SITE.author.github} rel="me noopener">github</a>
+      <a class="bracket-link" href={SITE.author.linkedin} rel="me noopener">linkedin</a>
+      <a class="bracket-link" href="/rss.xml">rss</a>
+      <a class="bracket-link" href={SITE.source} rel="noopener">source</a>
+    </nav>
+  </div>
+</footer>
+
+<style>
+  /* Workstation status bar. */
+  .site-footer {
+    margin-top: auto;
+    border-top: 1px solid var(--line);
+    background: var(--bg-dark);
+    box-shadow: inset 0 1px 0 var(--hl-top);
+  }
+
+  .inner {
+    max-width: 72rem;
+    margin-inline: auto;
+    padding: 0.9rem 1.25rem;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .status {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--fg-muted);
+  }
+
+  .prompt {
+    color: var(--jade);
+  }
+
+  .sep {
+    color: var(--fg-muted);
+    margin-inline: 0.3em;
+  }
+
+  nav {
+    display: flex;
+    gap: 0.9rem;
+    flex-wrap: wrap;
+  }
+</style>

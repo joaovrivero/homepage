@@ -1,0 +1,44 @@
+---
+import type { Post } from "../../lib/posts";
+import PostCard from "./PostCard.astro";
+
+interface Props {
+  posts: Post[];
+}
+
+const { posts } = Astro.props;
+---
+
+{
+  posts.length > 0 ? (
+    <ul class="post-list">
+      {posts.map((post) => (
+        <PostCard post={post} />
+      ))}
+    </ul>
+  ) : (
+    <p class="empty">
+      Nothing here yet. New notes land in <code>src/content/posts/</code>.
+    </p>
+  )
+}
+
+<style>
+  .post-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .empty {
+    color: var(--fg-secondary);
+    font-size: 0.9375rem;
+  }
+
+  .empty code {
+    font-size: 0.85em;
+    color: var(--cyan-bright);
+  }
+</style>

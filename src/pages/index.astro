@@ -1,0 +1,115 @@
+---
+import PostList from "../components/blog/PostList.astro";
+import ProjectRow from "../components/ProjectRow.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getPublishedPosts } from "../lib/posts";
+import { PROJECTS } from "../lib/projects";
+import { SITE } from "../lib/site";
+
+const posts = (await getPublishedPosts()).slice(0, 4);
+const featured = PROJECTS.filter((p) => p.featured);
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: SITE.name,
+  jobTitle: SITE.role,
+  url: Astro.site?.toString(),
+  sameAs: [SITE.author.github, SITE.author.linkedin],
+};
+---
+
+<BaseLayout section="home" schema={schema}>
+  <section class="hero reveal">
+    <p class="eyebrow"><span class="tilde">~</span>/home</p>
+    <h1>{SITE.name}</h1>
+    <p class="role">{SITE.role}</p>
+    <p class="intro">
+      Building systems, infrastructure, tools, and things I want to exist. This site is a
+      field journal — notes on environments, editors, and the occasional experiment,
+      all grown under the same jade canopy.
+    </p>
+    <div class="social">
+      <a class="btn" href={SITE.author.github} rel="me noopener"
+        ><span class="prompt">&gt;</span>github</a
+      >
+      <a class="btn" href={SITE.author.linkedin} rel="me noopener"
+        ><span class="prompt">&gt;</span>linkedin</a
+      >
+      <a class="btn" href={SITE.author.resume}><span class="prompt">&gt;</span>resume</a>
+    </div>
+  </section>
+
+  <section class="reveal" data-delay="2">
+    <div class="section-head">
+      <p class="eyebrow"><span class="tilde">~</span>/writing</p>
+      <a class="bracket-link" href="/writing">all posts</a>
+    </div>
+    <PostList posts={posts} />
+  </section>
+
+  <section class="reveal" data-delay="3">
+    <div class="section-head">
+      <p class="eyebrow"><span class="tilde">~</span>/projects</p>
+      <a class="bracket-link" href="/projects">all projects</a>
+    </div>
+    <ul class="project-list">
+      {featured.map((project) => <ProjectRow project={project} />)}
+    </ul>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    max-width: 34rem;
+  }
+
+  h1 {
+    font-size: clamp(1.7rem, 4vw, 2.25rem);
+    font-weight: 620;
+    margin-top: 0.6rem;
+  }
+
+  .role {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    color: var(--jade);
+  }
+
+  .intro {
+    margin-top: 0.9rem;
+    color: var(--fg);
+    font-size: 1.0313rem;
+  }
+
+  .social {
+    margin-top: 1.1rem;
+    display: flex;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+  }
+
+  section + section {
+    margin-top: 3.5rem;
+    padding-top: 2.25rem;
+    border-top: 1px solid var(--line);
+    border-image: var(--rule-gradient) 1;
+  }
+
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .project-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+</style>

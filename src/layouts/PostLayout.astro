@@ -1,0 +1,68 @@
+---
+import PostMeta from "../components/blog/PostMeta.astro";
+import type { Post } from "../lib/posts";
+import { SITE } from "../lib/site";
+import BaseLayout from "./BaseLayout.astro";
+
+interface Props {
+  post: Post;
+}
+
+const { post } = Astro.props;
+const { title, description, published, updated, tags, draft } = post.data;
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  headline: title,
+  description,
+  datePublished: published.toISOString(),
+  ...(updated ? { dateModified: updated.toISOString() } : {}),
+  author: {
+    "@type": "Person",
+    name: SITE.name,
+    url: Astro.site?.toString(),
+  },
+  url: new URL(`/writing/${post.id}`, Astro.site).toString(),
+};
+---
+
+<BaseLayout title={title} description={description} section="writing" ogType="article" schema={schema}>
+  <article>
+    <header class="post-header reveal">
+      <p class="eyebrow"><span class="tilde">~</span>/writing/{post.id}</p>
+      <h1>{title}</h1>
+      <p class="description">{description}</p>
+      <PostMeta published={published} updated={updated} tags={tags} draft={draft} />
+    </header>
+
+    <div class="prose reveal" data-delay="2">
+      <slot />
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .post-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    padding-bottom: 2rem;
+    margin-bottom: 2.5rem;
+    border-bottom: 1px solid var(--line);
+    border-image: var(--rule-gradient) 1;
+    max-width: 42rem;
+  }
+
+  h1 {
+    font-size: clamp(1.6rem, 4vw, 2.1rem);
+    margin: 0;
+  }
+
+  .description {
+    color: var(--fg-secondary);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    margin: 0;
+  }
+</style>
