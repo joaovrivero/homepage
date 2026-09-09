@@ -90,7 +90,7 @@ function pick<T>(items: T[]): T | undefined {
   return items[Math.floor(Math.random() * items.length)];
 }
 
-/** One or two leaves briefly shift toward bright jade, then settle back. */
+/** One or two leaves briefly shift toward bright gold, then settle back. */
 function glintTick() {
   const pre = visiblePre();
   if (!pre) return;
@@ -209,7 +209,7 @@ onMount(() => {
     user-select: none;
   }
 
-  /* Slow radial jade glow sitting behind the tree. */
+  /* Slow radial gold glow sitting behind the tree. */
   .glow {
     position: absolute;
     inset: -12% -18%;
@@ -217,7 +217,7 @@ onMount(() => {
     pointer-events: none;
     background: radial-gradient(
       55% 48% at 50% 38%,
-      color-mix(in srgb, var(--jade-dark) 13%, transparent),
+      color-mix(in srgb, var(--gold-dark) 13%, transparent),
       transparent 72%
     );
   }
@@ -275,28 +275,28 @@ onMount(() => {
   }
 
   .ascii :global(.leaf) {
-    color: var(--jade-dark);
+    color: var(--gold-dark);
     transition:
       color 900ms ease,
       text-shadow 900ms ease;
   }
 
   .ascii :global(.leaf.glint) {
-    color: var(--jade);
+    color: var(--gold);
   }
 
   .ascii :global(.leaf.glint-cool) {
-    color: var(--cyan);
+    color: var(--aqua);
   }
 
   .ascii :global(.leaf.glint-bright) {
-    color: var(--jade-bright);
-    text-shadow: 0 0 10px color-mix(in srgb, var(--jade-bright) 35%, transparent);
+    color: var(--gold-bright);
+    text-shadow: 0 0 10px color-mix(in srgb, var(--gold-bright) 35%, transparent);
   }
 
   .ascii :global(.leaf.firefly) {
-    color: var(--cyan-bright);
-    text-shadow: 0 0 12px color-mix(in srgb, var(--cyan-bright) 45%, transparent);
+    color: var(--aqua-bright);
+    text-shadow: 0 0 12px color-mix(in srgb, var(--aqua-bright) 45%, transparent);
   }
 
   .ascii-scene :global(.falling) {
@@ -304,7 +304,7 @@ onMount(() => {
     z-index: 1;
     font-family: var(--font-mono);
     font-size: 0.8125rem;
-    color: var(--jade);
+    color: var(--gold);
     pointer-events: none;
     animation: leaf-fall var(--dur) ease-in both;
   }

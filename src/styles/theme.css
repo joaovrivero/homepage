@@ -1,43 +1,49 @@
 /*
- * Solarized Osaka Jade — canonical theme tokens.
+ * Pinacoteca — canonical theme tokens.
  * The single source of truth for color across the site.
+ *
+ * Every hue is sampled from a painting in my wallpaper slideshow; lightness comes
+ * from an OKLCH ladder. Source of truth: dotfiles/theme/pinacoteca/colors.toml.
  */
 :root {
-  /* Surfaces, deepest to most elevated */
-  --bg-deep: #0a0f0f;
-  --bg-dark: #0d1413;
-  --bg: #101817;
-  --bg-raised: #16201f;
-  --bg-elevated: #1c2927;
+  /* The wall: neutral umber, deepest to most elevated. Vermeer, Diana and Her Nymphs. */
+  --bg-deep: #0c0805;
+  --bg-dark: #120d09;
+  --bg: #18130e;
+  --bg-raised: #211c17;
+  --bg-elevated: #2e2822;
 
-  --selection: #263a36;
+  --selection: #453b32;
 
-  /* Foreground scale */
-  --fg-muted: #536d67;
-  --fg-secondary: #789188;
-  --fg: #cbd8d2;
-  --fg-bright: #e2e9e5;
+  /* Linen. Same painting. */
+  --fg-muted: #7d6b59;
+  --fg-secondary: #b19a80;
+  --fg: #e6ccaf;
+  --fg-bright: #f7e5cf;
 
-  /* Identity accent */
-  --jade-dark: #3f7864;
-  --jade: #509475;
-  --jade-bright: #71cead;
+  /* Identity accent: gold leaf. Portrait of a Woman against a Gold Decorative Background. */
+  --gold-dark: #9b6e06;
+  --gold: #d7a447;
+  --gold-bright: #efbb5f;
 
-  /* Semantic accents */
-  --red: #e55c7a;
-  --red-bright: #f07178;
+  /* Pigments */
+  --red: #d67066; /* Matejko, Stańczyk */
+  --red-bright: #ee867b;
 
-  --yellow: #e7c664;
-  --yellow-bright: #ffd580;
+  --orange: #d77f47; /* Kuindzhi, Red Sunset on the Dnipro */
+  --orange-bright: #ef955d;
 
-  --blue: #54b9c5;
-  --blue-bright: #72c7d1;
+  --green: #88ab75; /* Van Gogh, Green Wheat Fields, Auvers */
+  --green-bright: #9dc18a;
 
-  --purple: #b77ee0;
-  --purple-bright: #c792ea;
+  --aqua: #6cabab; /* Van Gogh, Wheat Fields with Reaper, Auvers */
+  --aqua-bright: #82c2c1;
 
-  --cyan: #53c2b6;
-  --cyan-bright: #78dcca;
+  --blue: #799dbb; /* Hokusai, Under the Wave off Kanagawa */
+  --blue-bright: #8eb3d2;
+
+  --purple: #ad8ab6; /* Klimt, Virgin */
+  --purple-bright: #c39fcc;
 
   /* Hairlines and structure */
   --line: color-mix(in srgb, var(--bg-elevated) 82%, var(--fg-muted));
@@ -52,10 +58,10 @@
     inset 0 2px 4px color-mix(in srgb, black 32%, transparent),
     inset 0 1px 0 color-mix(in srgb, black 38%, transparent);
 
-  /* Deliberate separator: fades at the edges, a hint of jade at the start. */
+  /* Deliberate separator: fades at the edges, a hint of gold at the start. */
   --rule-gradient: linear-gradient(
     to right,
-    color-mix(in srgb, var(--jade) 45%, var(--line)),
+    color-mix(in srgb, var(--gold) 45%, var(--line)),
     var(--line) 12%,
     var(--line) 80%,
     transparent

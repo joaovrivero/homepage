@@ -3,7 +3,7 @@ export const SITE = {
   handle: "joao.rivero",
   role: "Software Engineer",
   description:
-    "Personal site and technical notebook of João Rivero — systems, infrastructure, tooling, and the Solarized Osaka Jade environment.",
+    "Personal site and technical notebook of João Rivero — systems, infrastructure, tooling, and Pinacoteca, a theme sampled from paintings.",
   locale: "en",
   author: {
     github: "https://github.com/joaovrivero",

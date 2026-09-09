@@ -1,7 +1,7 @@
 # homepage-v2
 
 Personal homepage and technical notebook — a static Astro site themed with
-**Solarized Osaka Jade** and anchored by a persistent ASCII bonsai.
+**Pinacoteca** and anchored by a persistent ASCII bonsai.
 
 Replaces [rivero-homepage](https://github.com/joaovrivero/rivero-homepage)
 (Next.js + Three.js) with something far lighter.
@@ -12,7 +12,7 @@ Replaces [rivero-homepage](https://github.com/joaovrivero/rivero-homepage)
 - [Svelte](https://svelte.dev) — one island: the persistent `AsciiScene`
 - [Tailwind CSS 4](https://tailwindcss.com) — on top of canonical theme tokens
 - MDX + Content Collections — writing lives in `src/content/posts/`
-- Shiki — custom Solarized Osaka Jade syntax theme
+- Shiki — custom Pinacoteca syntax theme
 - [Bun](https://bun.sh) — runtime and package manager
 
 ## Local development
@@ -70,5 +70,5 @@ final domain is decided.
 Canonical color tokens live in `src/styles/theme.css`. The same palette drives:
 
 - site UI (via Tailwind theme mapping in `global.css`)
-- syntax highlighting (`src/lib/shiki/solarized-osaka-jade.mjs`)
+- syntax highlighting (`src/lib/shiki/pinacoteca.mjs`)
 - the ASCII scene (`src/components/ascii/AsciiScene.svelte`)

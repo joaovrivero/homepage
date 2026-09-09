@@ -25,9 +25,9 @@ const categories = [
     label: "Terminal",
     tools: [
       {
-        name: "Terminal emulator",
-        description: "GPU-accelerated, configured to Solarized Osaka Jade",
-        meta: "placeholder — pick your daily driver",
+        name: "WezTerm and Alacritty",
+        description: "GPU-accelerated, both carrying the Pinacoteca palette",
+        meta: "wezterm · alacritty",
       },
       {
         name: "JetBrains Mono",
@@ -42,7 +42,7 @@ const categories = [
     tools: [
       {
         name: "zsh",
-        description: "Daily shell with a minimal jade prompt",
+        description: "Daily shell with a minimal gold prompt",
         meta: "~/.zshrc",
       },
     ],
@@ -70,7 +70,7 @@ const categories = [
       {
         name: "Zed",
         description: "Secondary editor for pairing and quick edits",
-        meta: "osaka-jade theme",
+        meta: "pinacoteca theme",
       },
     ],
   },
@@ -122,7 +122,7 @@ const categories = [
 
 <BaseLayout
   title="Uses"
-  description="The development environment — system, terminal, editors, CLI tools, and the Solarized Osaka Jade theme that ties it together."
+  description="The development environment — system, terminal, editors, CLI tools, and the Pinacoteca theme that ties it together."
   section="uses"
 >
   <section class="reveal">
@@ -132,7 +132,7 @@ const categories = [
       <p class="lede">
         The environment this site grew out of. Every layer — terminal, editor, multiplexer,
         even this page — runs the same theme:
-        <strong>Solarized Osaka Jade</strong>.
+        <strong><a href="/writing/pinacoteca">Pinacoteca</a></strong>, a palette sampled from the paintings in my wallpaper slideshow.
       </p>
     </header>
   </section>
@@ -176,7 +176,7 @@ const categories = [
   }
 
   .lede strong {
-    color: var(--jade-bright);
+    color: var(--gold-bright);
     font-weight: 500;
   }
 
@@ -191,7 +191,7 @@ const categories = [
 
   .hash {
     font-family: var(--font-mono);
-    color: var(--jade-dark);
+    color: var(--gold-dark);
     margin-right: 0.35rem;
   }
 

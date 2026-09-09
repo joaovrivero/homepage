@@ -1,0 +1,168 @@
+---
+title: "Pinacoteca"
+description: "A theme sampled from the paintings on my wall, and the rules that keep 477 of them on one desktop."
+published: 2026-09-08
+draft: false
+tags:
+  - theme
+  - dotfiles
+  - design
+image: /images/pinacoteca/mocks.webp
+---
+
+import Callout from "../../components/mdx/Callout.astro";
+import CodeExample from "../../components/mdx/CodeExample.astro";
+import Palette from "../../components/mdx/Palette.astro";
+import Screenshot from "../../components/mdx/Screenshot.astro";
+import TerminalPreview from "../../components/mdx/TerminalPreview.astro";
+
+My wallpaper is a slideshow of paintings. Caravaggio, Hokusai, Hopper, Klimt, Monet,
+Vermeer, Beksiński; a few hundred of them, in no particular order. I love it, and it
+made theming the rest of the desktop feel impossible. There is no colour scheme that
+suits both a black Caravaggio and a white Sorolla beach.
+
+I spent a while assuming I would have to trim the collection down to one mood.
+This is about why I didn't, and what I built instead.
+
+<Screenshot
+  src="/images/pinacoteca/mocks.webp"
+  alt="The same terminal window over six very different paintings"
+  caption="One window, six walls."
+/>
+
+## `01` — The gallery
+
+Museums hang wildly different work on the same wall. Same paint, same frames, same
+lighting, same little labels, and it reads as one place. Nobody walks through the
+Prado thinking the Goya clashes with the Bosch.
+
+So the desktop became a gallery. The wallpaper is the artwork and changes whenever it
+likes. Everything else is the wall: a fixed, museum-neutral chrome that never argues
+with what is hanging on it. Cohesion comes from the frame, not from the paintings.
+
+That decision settled the first half of the problem. The second half was choosing
+the wall colour, and I didn't want to guess.
+
+## `02` — Measuring the wall
+
+I downscaled every image in the slideshow, converted it to a perceptual colour space,
+and clustered the dominant colours. Aggregated over 477 paintings the collection is
+not neutral at all. It is old varnish.
+
+| measure | result |
+| --- | --- |
+| warm hues, umber and ochre through orange and yellow | 50% |
+| neutrals | 30% |
+| cool hues | 17% |
+| median lightness | 43 / 100 |
+| median saturation | 14 / 100 |
+
+Half of everything on my wall is brown, most of the rest is grey, and almost none of
+it is vivid. A warm, muted, dark base was not a taste decision. It was what the
+paintings had already voted for.
+
+<TerminalPreview title="~/Paintings/Slideshow">
+
+```bash
+for f in *.jpg; do
+  magick -define jpeg:size=320x320 "$f" -resize 64x64! \
+    -kmeans 6 -format %c histogram:info:- | sort -rn | head -6
+done
+```
+
+</TerminalPreview>
+
+## `03` — Pigments with provenance
+
+A warm dark theme is a crowded field. Gruvbox lives there, and so do Everforest and
+Cendre. My first draft was honestly just Gruvbox Material with a browner background;
+the gold accent was the same hex value. It was fine. It was not mine.
+
+What makes the themes I admire distinct is rarely their hues. Kanagawa is one
+painting, named pigment by pigment. Cendre samples a wood fire and derives everything
+from physics. Solarized Osaka keeps a classic palette but fixes it for modern
+monitors and modern editor UIs. They each have a method and a story that survives a
+screenshot.
+
+I had a source none of them did: the wall itself. So every hue in Pinacoteca is
+sampled from a specific painting in the slideshow, and the palette file records
+which one.
+
+<Palette title="pinacoteca · every hue names its painting" />
+
+The wall and the linen both come from Vermeer's *Diana and Her Nymphs*, which
+turned out to contain the entire umber ladder on its own. The red is the jester's
+costume in Matejko's *Stańczyk*. The blue is the Prussian blue of *The Great Wave*.
+The gold is a gold-ground portrait. Van Gogh supplied both the green and the aqua,
+from two wheat fields painted a month apart.
+
+Raw samples are far too dark for text, so the rule is: hue comes from the pigment,
+lightness comes from a ladder. Colours are placed in OKLCH, every accent sits at
+roughly the same perceived brightness, and every text colour clears 4.5:1 on the
+background. Chroma is clamped into a band so the cool pigments stay quiet and the
+warm ones stay warm.
+
+<Screenshot
+  src="/images/pinacoteca/swatches.webp"
+  alt="Two rows of swatches: the gruvbox-derived draft above, the sampled palette below with its source paintings"
+  caption="Row A is the Gruvbox-derived draft. Row B is the palette, with the source painting under each swatch."
+/>
+
+## `04` — The rules
+
+Six rules, in the spirit of Cendre's, so that future decisions are not taste calls.
+
+1. **Every hue is sampled from a painting on the wall.** Nothing is invented, and
+   the colours file says where each one came from.
+2. **Hue from the pigment, lightness from the ladder.** Separation by lightness, not
+   by hue. Minimum 4.5:1 for anything you read.
+3. **The wall is neutral umber.** Surfaces differ by lightness only.
+4. **One pigment per token family.** Strings are green, keywords are purple,
+   functions are blue, types are gold. Identifiers and punctuation stay in linen.
+   Colour marks meaning, not structure.
+5. **Diagnostics are their own family.** An error is never the same highlight as a
+   string, even when they share a hue.
+6. **The frame responds, the text does not.** Borders, cursor and mode indicator may
+   follow the current wallpaper. Syntax never does.
+
+Rule six is the part no static theme can do, and it is the one I haven't wired up
+yet. The base already holds on its own; the responsive frame is the next post.
+
+## `05` — Where it lives
+
+The source of truth is a single `colors.toml` in my dotfiles, laid out like an
+Omarchy theme so it drops into one unchanged. Each tool then carries its own copy of
+the numbers, because the tools run on Arch, NixOS and Windows and I wanted every
+platform to link exactly the files it already linked.
+
+<CodeExample file="theme/pinacoteca/colors.toml" note="excerpt">
+
+```toml
+accent = "#d7a447"
+foreground = "#e6ccaf"
+background = "#18130e"
+
+[palette]
+gold = "#d7a447"   # accent, types, warnings, search
+blue = "#799dbb"   # functions, headings, info
+
+[provenance.blue]
+painting = "Katsushika Hokusai - Under the Wave off Kanagawa (The Great Wave)"
+sampled = ["#324c62"]
+hue = 245
+```
+
+</CodeExample>
+
+Ports so far: WezTerm, Alacritty, Ghostty, Windows Terminal, Neovim, Zed, VS Code,
+tmux, Starship, fzf, btop, PSReadLine, and this site. The Neovim scheme is
+generated from a base16 palette and then corrected for rules four and five. The
+website you are reading swapped its tokens in one file.
+
+<Callout type="tip" title="the collection stayed">
+  Not one painting was removed for the sake of cohesion. Only exact duplicates and
+  files too small for the monitor went. The Bosch is still in the rotation.
+</Callout>
+
+Next: the responsive frame, a light variant for the 109 bright paintings, and a
+script that regenerates every port from the one TOML file.

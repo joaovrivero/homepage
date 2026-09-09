@@ -17,6 +17,7 @@ it moves — just enough that you're not sure it did.
 
 The stack is intentionally boring: Astro, a static build, a single Svelte island
 for the tree, and CSS for nearly every animation. The theme is
-[Solarized Osaka Jade](/uses), the same one running in my terminal.
+Solarized Osaka Jade, the same one running in my terminal at the time. It has since
+been replaced by [Pinacoteca](/writing/pinacoteca).
 
 Old growth: [rivero-homepage](https://github.com/joaovrivero/rivero-homepage).

@@ -10,9 +10,11 @@ export interface Project {
 
 export const PROJECTS: Project[] = [
   {
-    name: "osaka-jade",
-    description: "Cross-platform development environment theme",
-    tags: ["Nix", "Astro", "Lua", "JSON"],
+    name: "pinacoteca",
+    description: "A theme sampled from the paintings on my wall, ported to every tool I use",
+    tags: ["Lua", "TOML", "Nix", "Astro"],
+    repo: "https://github.com/joaovrivero/dotfiles/tree/main/theme/pinacoteca",
+    url: "/writing/pinacoteca",
     status: "active",
     featured: true,
   },

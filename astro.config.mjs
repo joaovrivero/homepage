@@ -4,7 +4,7 @@ import sitemap from "@astrojs/sitemap";
 import svelte from "@astrojs/svelte";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
-import { solarizedOsakaJade } from "./src/lib/shiki/solarized-osaka-jade.mjs";
+import { pinacoteca } from "./src/lib/shiki/pinacoteca.mjs";
 
 export default defineConfig({
   // Update this when the final domain is decided.
@@ -18,7 +18,7 @@ export default defineConfig({
   },
   markdown: {
     shikiConfig: {
-      theme: solarizedOsakaJade,
+      theme: pinacoteca,
       wrap: false,
     },
   },

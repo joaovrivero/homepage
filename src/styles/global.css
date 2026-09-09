@@ -14,19 +14,21 @@
   --color-fg-secondary: var(--fg-secondary);
   --color-fg: var(--fg);
   --color-fg-bright: var(--fg-bright);
-  --color-jade-dark: var(--jade-dark);
-  --color-jade: var(--jade);
-  --color-jade-bright: var(--jade-bright);
+  --color-gold-dark: var(--gold-dark);
+  --color-gold: var(--gold);
+  --color-gold-bright: var(--gold-bright);
   --color-red: var(--red);
   --color-red-bright: var(--red-bright);
-  --color-yellow: var(--yellow);
-  --color-yellow-bright: var(--yellow-bright);
+  --color-green: var(--green);
+  --color-green-bright: var(--green-bright);
+  --color-orange: var(--orange);
+  --color-orange-bright: var(--orange-bright);
   --color-blue: var(--blue);
   --color-blue-bright: var(--blue-bright);
   --color-purple: var(--purple);
   --color-purple-bright: var(--purple-bright);
-  --color-cyan: var(--cyan);
-  --color-cyan-bright: var(--cyan-bright);
+  --color-aqua: var(--aqua);
+  --color-aqua-bright: var(--aqua-bright);
   --color-line: var(--line);
   --color-line-strong: var(--line-strong);
 
@@ -57,7 +59,7 @@ body {
   flex-direction: column;
 }
 
-/* Ambient depth: a barely-there jade glow high on the page and a faint
+/* Ambient depth: a barely-there gold glow high on the page and a faint
    vertical falloff into --bg-deep at the bottom. Static, no animation. */
 body::before {
   content: "";
@@ -67,7 +69,7 @@ body::before {
   pointer-events: none;
   background: radial-gradient(
     52rem 34rem at 78% -6rem,
-    color-mix(in srgb, var(--jade-dark) 7%, transparent),
+    color-mix(in srgb, var(--gold-dark) 7%, transparent),
     transparent 68%
   );
 }
@@ -95,7 +97,7 @@ body::after {
 }
 
 :focus-visible {
-  outline: 2px solid var(--jade);
+  outline: 2px solid var(--gold);
   outline-offset: 2px;
   border-radius: 2px;
 }
@@ -137,7 +139,7 @@ samp {
 }
 
 .eyebrow .tilde {
-  color: var(--jade);
+  color: var(--gold);
 }
 
 .hairline {
@@ -146,11 +148,11 @@ samp {
   border-image: var(--rule-gradient) 1;
 }
 
-/* Inline text link with jade underline */
+/* Inline text link with gold underline */
 .link {
   color: var(--fg);
   text-decoration: underline;
-  text-decoration-color: color-mix(in srgb, var(--jade) 45%, transparent);
+  text-decoration-color: color-mix(in srgb, var(--gold) 45%, transparent);
   text-underline-offset: 0.22em;
   transition:
     color 140ms ease,
@@ -158,8 +160,8 @@ samp {
 }
 
 .link:hover {
-  color: var(--jade-bright);
-  text-decoration-color: var(--jade-bright);
+  color: var(--gold-bright);
+  text-decoration-color: var(--gold-bright);
 }
 
 /* ------------------------------------------------------------------ */
@@ -176,9 +178,9 @@ samp {
   color: var(--fg);
   padding: 0.42rem 0.9rem;
   background: var(--bg-raised);
-  border: 1px solid color-mix(in srgb, var(--jade-dark) 55%, var(--line-strong));
+  border: 1px solid color-mix(in srgb, var(--gold-dark) 55%, var(--line-strong));
   border-bottom-width: 3px;
-  border-bottom-color: color-mix(in srgb, var(--jade-dark) 30%, var(--edge));
+  border-bottom-color: color-mix(in srgb, var(--gold-dark) 30%, var(--edge));
   border-radius: 6px;
   box-shadow: var(--shadow-raise), inset 0 1px 0 var(--hl-top);
   transition:
@@ -194,8 +196,8 @@ samp {
 .btn:hover,
 .btn:focus-visible {
   background: var(--bg-elevated);
-  border-color: var(--jade);
-  border-bottom-color: color-mix(in srgb, var(--jade-dark) 55%, var(--edge));
+  border-color: var(--gold);
+  border-bottom-color: color-mix(in srgb, var(--gold-dark) 55%, var(--edge));
   color: var(--fg-bright);
   transform: translateY(-1px);
   box-shadow: var(--shadow-raise-lg), inset 0 1px 0 var(--hl-top);
@@ -209,7 +211,7 @@ samp {
 }
 
 .btn .prompt {
-  color: var(--jade);
+  color: var(--gold);
 }
 
 /* Recessed surface: content set into the page rather than on top of it. */
@@ -241,12 +243,12 @@ samp {
 }
 
 .bracket-link:hover {
-  color: var(--jade-bright);
+  color: var(--gold-bright);
 }
 
 .bracket-link:hover::before,
 .bracket-link:hover::after {
-  color: var(--jade-dark);
+  color: var(--gold-dark);
 }
 
 /* ------------------------------------------------------------------ */
@@ -271,7 +273,7 @@ samp {
 /* Numbered-section headings ("01 — Philosophy") keep the number quiet */
 .prose h2 code,
 .prose h3 code {
-  color: var(--jade);
+  color: var(--gold);
 }
 
 .prose h3 {
@@ -287,13 +289,13 @@ samp {
 .prose a {
   color: var(--fg);
   text-decoration: underline;
-  text-decoration-color: color-mix(in srgb, var(--jade) 45%, transparent);
+  text-decoration-color: color-mix(in srgb, var(--gold) 45%, transparent);
   text-underline-offset: 0.22em;
 }
 
 .prose a:hover {
-  color: var(--jade-bright);
-  text-decoration-color: var(--jade-bright);
+  color: var(--gold-bright);
+  text-decoration-color: var(--gold-bright);
 }
 
 .prose strong {
@@ -325,7 +327,7 @@ samp {
   content: "·";
   position: absolute;
   left: -1.1rem;
-  color: var(--jade);
+  color: var(--gold);
   font-family: var(--font-mono);
 }
 
@@ -338,7 +340,7 @@ samp {
 }
 
 .prose blockquote {
-  border-left: 2px solid var(--jade-dark);
+  border-left: 2px solid var(--gold-dark);
   padding-left: 1.1rem;
   color: var(--fg-secondary);
   font-style: italic;
@@ -353,7 +355,7 @@ samp {
 
 .prose code:not(pre code) {
   font-size: 0.875em;
-  color: var(--cyan-bright);
+  color: var(--aqua-bright);
   background: var(--bg-raised);
   border: 1px solid var(--line);
   border-radius: 4px;
